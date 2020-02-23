@@ -66,6 +66,7 @@ public class DynamicActivity extends AppCompatActivity {
                 if(shortcutInfo!=null)
                 {
                     shortResource.setLongLabel(R.string.new_dynamic_shortcut_long_label1);
+                    shortResource.setShortLabel(R.string.new_dynamic_shortcut_short_label1);
                     builder.setLongLabel(getString(shortResource.getLongLabel()));
                     builder.setShortLabel(getString(shortResource.getShortLabel()));
                 }

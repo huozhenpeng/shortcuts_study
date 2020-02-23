@@ -7,6 +7,7 @@
     <string name="dynamic_shortcut_short_label1">dynamicShortLabel1</string>
     <string name="dynamic_shortcut_long_label1">dynamicLongLabel1</string>
     <string name="new_dynamic_shortcut_long_label1">new_dynamic_shortcut_long_label1</string>
+    <string name="new_dynamic_shortcut_short_label1">new_dynamic_shortcut_short_label1</string>
 
     <string name="dynamic_shortcut_short_label2">dynamicShortLabel2</string>
     <string name="dynamic_shortcut_long_label2">dynamicLongLabel2</string>

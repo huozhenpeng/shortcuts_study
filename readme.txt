@@ -39,8 +39,8 @@ API Level     Target
 
         #####2、动态快捷方式 （Dynamic shortcuts）        版本>=25
 
-                注意：不会被保存，也就是说每次打开app时都需要重新发布一下
 
+                注意：清除应用数据的时候会全部移除，如果说应用时允许对数据进行备份和还原的话(android:allowBackup="true")，动态快捷方式不会自动恢复
 
                 移除操作：
 
@@ -92,7 +92,7 @@ API Level     Target
 
 ### 最大支持快捷方式数
 
-        * 最大支持创建5个，不包含Pinned shortcuts，Pinned shortcuts可以创建任意个
+        * 最大支持创建5个（Android 10版本上已经是10个了），不包含Pinned shortcuts，Pinned shortcuts可以创建任意个
 
         示例：
 
