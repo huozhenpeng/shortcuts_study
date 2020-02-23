@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_show"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <Button
+        android:id="@+id/b_staticCreate"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="静态创建快捷方式直接看xml"
+        android:gravity="center"
+        android:onClick="createCuts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_show" />
+
+    <Button
+        android:id="@+id/b_dynamicCreate"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="代码创建快捷方式"
+        android:gravity="center"
+        android:onClick="createCuts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/b_staticCreate" />
+
+
+
+    <Button
+        android:id="@+id/b_createDesktopCuts"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="创建桌面快捷方式"
+        android:gravity="center"
+        android:onClick="createDesktopCuts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/b_dynamicCreate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DynamicActivity">
+
+    <Button
+        android:id="@+id/tv_create"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="创建快捷方式"
+        android:gravity="center"
+        android:onClick="createShortCuts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
+    <Button
+        android:id="@+id/tv_update"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="更新快捷方式"
+        android:gravity="center"
+        android:onClick="updateShortCuts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_create" />
+
+
+    <Button
+        android:id="@+id/tv_del"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="删除快捷方式"
+        android:gravity="center"
+        android:onClick="delShortCuts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_update" />
+</androidx.constraintlayout.widget.ConstraintLayout>

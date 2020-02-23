@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+    shortcutId:shortcut 唯一标识符，相同的 shortcutId 会被覆盖,必需字段
+    shortcutShortLabel:将 shortcut 拖动到桌面时显示的名字，官方建议不超过 10 个字符，必须字段
+    shortcutLongLabel:shortcut 列表中每个 shortcut 的名字，不宜过长，如果过长或未设置默认会显示 ShortLabel，官方建议不超过 25 个字符。可选字段。
+    icon: shortcut 的 icon，在列表展示和拖动到桌面时显示需要，可选字段
+    enabled:表示 shortcut 是否可用，false 表示禁用
+    shortcutDisabledMessage:为已固定在桌面的 shortcut 被 Disabled 后点击时的 Toast 提示内容。可选字段。
+    intent:为点击 shortcut 时响应的 Intent，必须字段。
+    -->
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/add"
+        android:shortcutDisabledMessage="@string/static_disabled_message"
+        android:shortcutId="staticId1"
+        android:shortcutLongLabel="@string/static_shortcut_long_label"
+        android:shortcutShortLabel="@string/static_shortcut_short_label">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="content://example.com/fromStaticShortcut"
+            android:targetClass="com.example.shortcutsstudy.StaticActivity"
+            android:targetPackage="com.example.shortcutsstudy" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+
+</shortcuts>

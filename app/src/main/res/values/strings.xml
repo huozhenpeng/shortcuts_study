@@ -1,0 +1,30 @@
+
+
+<resources>
+<string name="app_name">short cut</string>
+<string name="static_shortcut_short_label">静态短标题</string>
+<string name="static_shortcut_long_label">静态长标题</string>
+<string name="static_disabled_message">静态不可用标题</string>
+
+<string name="dynamic_shortcut_short_label1">动态短标题1</string>
+<string name="dynamic_shortcut_long_label1">动态长标题1</string>
+
+<string name="new_dynamic_shortcut_long_label1">新动态长标题1</string>
+
+<string name="dynamic_shortcut_short_label2">动态短标题2</string>
+<string name="dynamic_shortcut_long_label2">动态长标题2</string>
+
+
+
+
+<string name="pinned_shortcut_short_label2">桌面短label</string>
+<string name="pinned_shortcut_long_label2">桌面长label</string>
+
+<string name="add_new_website">添加新的站点</string>
+<string name="add_new_website_short">添加站点</string>
+<string name="existing_shortcuts">存在的 shortcuts:</string>
+<string name="remove_shortcut">移除</string>
+<string name="disable_shortcut">无效</string>
+<string name="enable_shortcut">有效</string>
+<string name="disable_message">你不能点击他</string>
+</resources>
