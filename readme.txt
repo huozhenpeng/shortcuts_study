@@ -66,6 +66,15 @@ API Level     Target
                 更新方式同Dynamic shortcuts
 
 
+
+### 系统设置更改产生的bug
+
+        系统设置的更改，比如修改系统的语言，动态 Shortcuts 是不能动态更新的，此时需要创建广播监听 Intent.ACTION_LOCALE_CHANGED ,
+        当收到广播时重新更新快捷方式，保证快捷方式展示没有问题
+
+        这块比较复杂：目前没有找到比较好的办法,通过在sp中维护了一个map，记录了shortcut id和资源的对应关系（就是无法获取原先的资源id，比如说shortcutShortLabel）
+
+
 ### Shortcuts展示顺序
 
 
@@ -96,12 +105,22 @@ API Level     Target
 
 
 
-### 系统设置更改产生的bug
+### 注意事项
 
-        系统设置的更改，比如修改系统的语言，动态 Shortcuts 是不能动态更新的，此时需要创建广播监听 Intent.ACTION_LOCALE_CHANGED ,
-        当收到广播时重新更新快捷方式，保证快捷方式展示没有问题
+        * 为了更好的视觉效果，一般超链接不要多于四个
 
-        这块比较复杂：目前没有找到比较好的办法（就是无法获取原先的资源id，比如说shortcutShortLabel）
+        * 只有在 shortcuts 的意义存在时才更新
+
+          当改变动态快捷方式时，只有在 shortcut 仍然保持它的含义时，调用 updateShortcuts() 方法改变它的信息，否则，
+          应该使用 addDynamicShortcuts() 或 setDynamicShortcuts() 创建一个具有新含义的 shortcutId 的快捷方式。
+
+          例如，如果我们已经创建了导航到一个超市的快捷方式，如果超市的名称改变了但是位置并没有变化时，只更新信息是合适的，
+          但是如果用户开始在一个不同位置的超市购物时，最好就是创建一个新的快捷方式。
+
+
+        * 动态链接不会保存，重启app后需要重新发布
+
+
 
 
 

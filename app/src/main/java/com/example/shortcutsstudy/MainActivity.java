@@ -21,8 +21,7 @@ public class MainActivity extends AppCompatActivity {
         {
             ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
 
-//            tv_show.setText("最大支持的快捷方式数："+shortcutManager.getMaxShortcutCountPerActivity());
-            tv_show.setText("最大支持的快捷方式数："+getString(R.string.dynamic_shortcut_long_label1));
+            tv_show.setText("最大支持的快捷方式数："+shortcutManager.getMaxShortcutCountPerActivity());
         }
 
     }
