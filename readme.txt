@@ -76,6 +76,10 @@ API Level     Target
         这块比较复杂：目前没有找到比较好的办法,通过在sp中维护了一个map，记录了shortcut id和资源的对应关系（就是无法获取原先的资源id，比如说shortcutShortLabel）
 
 
+
+
+        修改：借助Intent
+
 ### Shortcuts展示顺序
 
 
