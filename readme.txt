@@ -73,7 +73,13 @@ API Level     Target
         系统设置的更改，比如修改系统的语言，动态 Shortcuts 是不能动态更新的，此时需要创建广播监听 Intent.ACTION_LOCALE_CHANGED ,
         当收到广播时重新更新快捷方式，保证快捷方式展示没有问题
 
-        这块比较复杂：目前没有找到比较好的办法,通过在sp中维护了一个map，记录了shortcut id和资源的对应关系（就是无法获取原先的资源id，比如说shortcutShortLabel）
+        这块比较复杂：
+
+            1、目前没有找到比较好的办法,通过在sp中维护了一个map，记录了shortcut id和资源的对应关系（就是无法获取原先的资源id，比如说shortcutShortLabel）
+
+            2、借助Intent感觉更好一些，用法参考branch_dev分支
+
+
 
 
 ### Shortcuts展示顺序
