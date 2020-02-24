@@ -40,7 +40,7 @@ API Level     Target
         #####2、动态快捷方式 （Dynamic shortcuts）        版本>=25
 
 
-                注意：清除应用数据的时候会全部移除，如果说应用时允许对数据进行备份和还原的话(android:allowBackup="true")，
+                注意：清除应用数据的时候会全部移除，如果说app允许对数据进行备份和还原的话(android:allowBackup="true")，
                      在还原数据的时候动态快捷方式不会自动恢复
 
                 移除操作：
