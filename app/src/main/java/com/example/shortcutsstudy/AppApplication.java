@@ -16,11 +16,5 @@ public class AppApplication extends Application {
         super.onCreate();
 
         application=this;
-        ShortcutHelper.getInstance().idMap= (Map<String, ShortResource>) SharedPreferenceUtils.getObj(application,"IdMap");
-        if(ShortcutHelper.getInstance().idMap==null)
-        {
-            ShortcutHelper.getInstance().idMap=new HashMap<>();
-        }
-        Log.e(TAG,""+ShortcutHelper.getInstance().idMap.keySet().size());
     }
 }

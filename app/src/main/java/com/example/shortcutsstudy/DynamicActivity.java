@@ -59,17 +59,20 @@ public class DynamicActivity extends AppCompatActivity {
             {
                 //重新构建builder
                 final ShortcutInfo.Builder builder = new ShortcutInfo.Builder(this, shortcutInfo.getId());
-                builder.setIntent(shortcutInfo.getIntent());
-                builder.setRank(shortcutInfo.getRank());
-                //
-                ShortResource shortResource= ShortcutHelper.getInstance().idMap.get(shortcutInfo.getId());
-                if(shortcutInfo!=null)
+                Intent intent=shortcutInfo.getIntent();
+                if(intent!=null)
                 {
-                    shortResource.setLongLabel(R.string.new_dynamic_shortcut_long_label1);
-                    shortResource.setShortLabel(R.string.new_dynamic_shortcut_short_label1);
-                    builder.setLongLabel(getString(shortResource.getLongLabel()));
-                    builder.setShortLabel(getString(shortResource.getShortLabel()));
+                    intent.putExtra("longLabel",R.string.new_dynamic_shortcut_long_label1);
+                    intent.putExtra("shortLabel",R.string.new_dynamic_shortcut_short_label1);
+
+                    builder.setIntent(intent);
+
+                    builder.setLongLabel(getString(R.string.new_dynamic_shortcut_long_label1));
+                    builder.setShortLabel(getString(R.string.new_dynamic_shortcut_short_label1));
                 }
+
+                builder.setRank(shortcutInfo.getRank());
+
 
                 updates.add(builder.build());
             }
@@ -94,7 +97,6 @@ public class DynamicActivity extends AppCompatActivity {
 
                 shortcutManager.removeDynamicShortcuts(delList);
 
-                ShortcutHelper.getInstance().removeKey(ID_DYNAMIC_1);
 
             }
         }
@@ -107,18 +109,17 @@ public class DynamicActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.N_MR1)
     private ShortcutInfo createShortcutInfo1() {
-        ShortResource shortResource=new ShortResource();
-        shortResource.setShortLabel(R.string.dynamic_shortcut_short_label1);
-        shortResource.setLongLabel(R.string.dynamic_shortcut_long_label1);
-        ShortcutHelper.getInstance().putKey(ID_DYNAMIC_1,shortResource);
+        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.baidu.com"));
+        intent.putExtra("longLabel",R.string.dynamic_shortcut_long_label1);
+        intent.putExtra("shortLabel",R.string.dynamic_shortcut_short_label1);
 
         return new ShortcutInfo.Builder(this, ID_DYNAMIC_1)
-                .setShortLabel(getString(shortResource.getShortLabel()))
-                .setLongLabel(getString(shortResource.getLongLabel()))
+                .setShortLabel(getString(R.string.dynamic_shortcut_short_label1))
+                .setLongLabel(getString(R.string.dynamic_shortcut_long_label1))
                 .setIcon(Icon.createWithResource(this, R.drawable.link))
                 //设置等级，在列表中做显示时做排序用的
                 .setRank(1)
-                .setIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.baidu.com")))
+                .setIntent(intent)
                 .build();
     }
 

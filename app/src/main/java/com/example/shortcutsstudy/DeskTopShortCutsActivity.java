@@ -29,14 +29,13 @@ public class DeskTopShortCutsActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.putExtra("key", "fromPinnedShortcut");
 
-                ShortResource shortResource=new ShortResource();
-                shortResource.setShortLabel(R.string.pinned_shortcut_short_label2);
-                shortResource.setLongLabel(R.string.pinned_shortcut_long_label2);
-                ShortcutHelper.getInstance().putKey(id,shortResource);
+                intent.putExtra("longLabel",R.string.pinned_shortcut_long_label2);
+                intent.putExtra("shortLabel",R.string.pinned_shortcut_short_label2);
+
 
                 ShortcutInfo pinShortcutInfo = new ShortcutInfo.Builder(this, id)
-                        .setShortLabel(getString(shortResource.getShortLabel()))
-                        .setLongLabel(getString(shortResource.getLongLabel()))
+                        .setShortLabel(getString(R.string.pinned_shortcut_long_label2))
+                        .setLongLabel(getString(R.string.pinned_shortcut_short_label2))
                         .setIcon(Icon.createWithResource(this, R.drawable.add))
                         .setIntent(intent)
                         .build();

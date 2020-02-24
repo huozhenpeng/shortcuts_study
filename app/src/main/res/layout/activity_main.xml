@@ -22,7 +22,6 @@
         android:layout_height="60dp"
         android:text="静态创建快捷方式直接看xml"
         android:gravity="center"
-        android:onClick="createCuts"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_show" />
