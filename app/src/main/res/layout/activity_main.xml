@@ -50,4 +50,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/b_dynamicCreate" />
 
+    <Button
+        android:id="@+id/b_oldDesktopCuts"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="旧版本创建桌面快捷方式"
+        android:gravity="center"
+        android:onClick="createOldDesktopCuts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/b_createDesktopCuts" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

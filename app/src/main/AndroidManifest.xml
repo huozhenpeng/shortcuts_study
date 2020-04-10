@@ -38,9 +38,17 @@
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".OldActivity"
+            android:exported="true"
+            >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
 
 
 
