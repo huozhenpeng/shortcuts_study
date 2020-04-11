@@ -19,7 +19,10 @@
 
         </activity>
 
-        <activity android:name=".ShortCutOpenActivity"/>
+        <!--低版本需开启，要不然提示应用未安装-->
+        <activity android:name=".ShortCutOpenActivity"
+            android:exported="true"
+            />
 
         <receiver
             android:name=".NormalCreateBroadcastReceiver"
