@@ -17,38 +17,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!--静态快捷方式-->
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"
-                />
         </activity>
 
+        <activity android:name=".ShortCutOpenActivity"/>
 
-        <activity android:name=".StaticActivity"
-            />
-        <activity android:name=".DynamicActivity"/>
-
-        <activity android:name=".DynamicCutsOpenActivity"/>
-
-        <activity android:name=".DeskTopShortCutsActivity"/>
-
-        <receiver android:name=".ShortcutReceiver">
+        <receiver
+            android:name=".NormalCreateBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="com.shortcut.core.normal_create" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".OldActivity"
-            android:exported="true"
-            >
-        </activity>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+
+    <!-- 快捷方式开始 -->
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.bbk.launcher2.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.bbk.launcher2.permission.WRITE_SETTINGS" />
 
 
 

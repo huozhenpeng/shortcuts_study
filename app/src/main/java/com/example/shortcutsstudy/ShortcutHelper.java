@@ -1,159 +1,160 @@
 package com.example.shortcutsstudy;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentSender;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.widget.Toast;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.pm.ShortcutInfoCompat;
+import android.support.v4.content.pm.ShortcutManagerCompat;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Created by ZP on 2019/3/2.
+ */
 public class ShortcutHelper {
 
-
-    private static class SingleTonHolder
-    {
-        private static ShortcutHelper INSTANCE=new ShortcutHelper();
+    public static boolean requestPinShortcut(@NonNull Context context, @NonNull ShortcutInfoCompat infoCompat) {
+        return ShortcutManagerCompat.requestPinShortcut(context, infoCompat, null);
     }
 
-    private ShortcutHelper()
-    {
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1)
-        {
-            mContext=AppApplication.application;
-            mShortcutManager=mContext.getSystemService(ShortcutManager.class);
-        }
-
-    }
-    public static ShortcutHelper getInstance()
-    {
-        return SingleTonHolder.INSTANCE;
+    public static boolean requestPinShortcut(@NonNull Context context,
+                                             @NonNull ShortcutInfoCompat infoCompat, @Nullable IntentSender callback) {
+        return ShortcutManagerCompat.requestPinShortcut(context, infoCompat, callback);
     }
 
-
-
-    private  ShortcutManager mShortcutManager;
-
-    private  Context mContext;
-
-    public void refreshShortcuts()
-    {
-        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
-            @Override
-            public void run() {
-                final List<ShortcutInfo> updateList = new ArrayList<>();
-                if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1)
-                {
-                    for(ShortcutInfo shortcutInfo:getShortcuts())
-                    {
-                        if(shortcutInfo.isImmutable())
-                        {
-                            continue;
-                        }
-
-                        //重新构建builder
-                        final ShortcutInfo.Builder builder = new ShortcutInfo.Builder(mContext, shortcutInfo.getId());
-                        Intent intent=shortcutInfo.getIntent();
-                        if(intent!=null)
-                        {
-                            int longLabel=intent.getIntExtra("longLabel",-1);
-                            int shortLabel=intent.getIntExtra("shortLabel",-1);
-
-                            builder.setIntent(intent);
-
-                            builder.setLongLabel(mContext.getResources().getString(longLabel));
-                            builder.setShortLabel(mContext.getResources().getString(shortLabel));
-                        }
-
-                        builder.setRank(shortcutInfo.getRank());
-
-
-                        updateList.add(builder.build());
-
-                    }
-                    if(updateList.size()>0)
-                    {
-                       boolean isSuccess= mShortcutManager.updateShortcuts(updateList);
-                       if(!isSuccess)
-                       {
-                           Toast.makeText(AppApplication.application,"rate-limited",Toast.LENGTH_SHORT).show();
-                       }
-
-                    }
-
-                }
-
+    public static boolean requestPinShortcut(@NonNull Context context, @NonNull ShortcutInfoCompat infoCompat,
+                                             @Nullable IntentSender intentSender,
+                                             boolean isUpdateAuto, @Nullable ShortcutCallback callback) {
+        if (isUpdateAuto && isShortcutExit(context, infoCompat.getId())) {
+            boolean isUpdateSuccess = updatePinShortcut(context, infoCompat);
+            if (callback != null) {
+                callback.isShortcutUpdate(isUpdateSuccess);
             }
-        });
-
-    }
-
-
-    public List<ShortcutInfo> getShortcuts()
-    {
-        final List<ShortcutInfo> shortCuts = new ArrayList<>();
-        final HashSet<String> shortCutKeys = new HashSet<>();
-
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1)
-        {
-            if(mShortcutManager!=null)
-            {
-                //检查dynamic shortcuts
-                for (ShortcutInfo shortcutInfo:mShortcutManager.getDynamicShortcuts())
-                {
-                    if(!shortcutInfo.isImmutable())
-                    {
-                        shortCuts.add(shortcutInfo);
-                        shortCutKeys.add(shortcutInfo.getId());
-                    }
-
-                }
-
-                //检查pinned shortcuts
-                for (ShortcutInfo shortcutInfo : mShortcutManager.getPinnedShortcuts()) {
-                    if (!shortcutInfo.isImmutable() && !shortCutKeys.contains(shortcutInfo.getId())) {
-                        shortCuts.add(shortcutInfo);
-                        shortCutKeys.add(shortcutInfo.getId());
-                    }
-                }
-
+            return isUpdateSuccess;
+        } else {
+            boolean isCreateSuccess = requestPinShortcut(context, infoCompat, intentSender);
+            if (callback != null) {
+                callback.isShortcutCreate(isCreateSuccess);
             }
+            return isCreateSuccess;
         }
-        return shortCuts;
-
     }
 
-    public ShortcutInfo getDynamicShortcutsById(String id)
-    {
-        ShortcutInfo shortCuts = null;
 
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1)
-        {
-            if(mShortcutManager!=null)
-            {
-                //检查dynamic shortcuts
-                for (ShortcutInfo shortcutInfo:mShortcutManager.getDynamicShortcuts())
-                {
-                    if(id.equals(shortcutInfo.getId()))
-                    {
-                        shortCuts=shortcutInfo;
-                    }
+    public static boolean updatePinShortcut(Context context, ShortcutInfoCompat info) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager mShortcutManager =
+                    context.getSystemService(ShortcutManager.class);
+            if (mShortcutManager == null) {
+                return false;
+            }
 
+            return mShortcutManager.updateShortcuts(Collections.singletonList(info.toShortcutInfo()));
+        }
+        return false;
+    }
+
+    public static boolean isShortcutExit(@NonNull Context context, @NonNull String id) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager mShortcutManager =
+                    context.getSystemService(ShortcutManager.class);
+            if (mShortcutManager == null) {
+                return false;
+            }
+
+            List<ShortcutInfo> pinnedShortcuts =
+                    mShortcutManager.getPinnedShortcuts();
+            for (ShortcutInfo pinnedShortcut : pinnedShortcuts) {
+                if (pinnedShortcut.getId().equals(id)) {
+                    return true;
                 }
             }
         }
-        return shortCuts;
+        return false;
     }
 
+    public interface ShortcutExistCallback {
+        void shortcutNotExist();
 
+        void shortcutExist();
 
+        void shortcutExistWithHW();
+    }
 
+    public static boolean isShortcutExit(@NonNull Context context, @NonNull String id, CharSequence label, ShortcutExistCallback callback) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager mShortcutManager =
+                    context.getSystemService(ShortcutManager.class);
+            if (mShortcutManager == null) {
+                callback.shortcutNotExist();
+                return false;
+            }
 
+            boolean withSameName = false;
+            List<ShortcutInfo> pinnedShortcuts =
+                    mShortcutManager.getPinnedShortcuts();
+            for (ShortcutInfo pinnedShortcut : pinnedShortcuts) {
+                if (pinnedShortcut.getId().equals(id)) {
+                    callback.shortcutExist();
+                    return true;
+                }
+                if (label.equals(pinnedShortcut.getShortLabel())) {
+                    withSameName = true;
+                }
+            }
+            if (withSameName
+                    && Build.MANUFACTURER.toLowerCase().equals("huawei")
+                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                    && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+                callback.shortcutExistWithHW();
+                return true;
+            }
+        }
+        callback.shortcutNotExist();
+        return false;
+    }
+
+    public static boolean isRequestPinShortcutSupported(@NonNull Context context) {
+        return ShortcutManagerCompat.isRequestPinShortcutSupported(context);
+    }
+
+    public static void toPermissionSetting(Context context) {
+        new RuntimeSettingPage(context).start();
+    }
+
+    public interface ShortcutCallback {
+        void isShortcutUpdate(boolean isSuccess);
+
+        void isShortcutCreate(boolean isSuccess);
+    }
+
+    public static int getIconMaxHeight(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager mShortcutManager =
+                    context.getSystemService(ShortcutManager.class);
+            if (mShortcutManager == null) {
+                return -1;
+            }
+            return mShortcutManager.getIconMaxHeight();
+        }
+        return -1;
+    }
+
+    public static int getIconMaxWidth(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager mShortcutManager =
+                    context.getSystemService(ShortcutManager.class);
+            if (mShortcutManager == null) {
+                return -1;
+            }
+            return mShortcutManager.getIconMaxWidth();
+        }
+        return -1;
+    }
 }
